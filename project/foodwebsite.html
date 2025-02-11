@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Foodweb.css">
+    <title>Food Order Website</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            width: 140px;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            margin-left: 220px; /* Adjust this value based on sidebar width */
+            padding: 20px;
+            width: calc(100% - 220px); /* Adjust this value based on sidebar width */
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ff6347;
+        }
+
+        /* Menu Section Styles */
+        .menu {
+            display: none; /* Initially hide the menu section */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .menu-item img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item h2 {
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .menu-item .price {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .menu-item button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item button:hover {
+            background-color: #ff3e21;
+        }
+
+        /* Other Section Styles */
+        #offers-section {
+            background-color: #ffd700;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #ads-section {
+            background-color: #ffa07a;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #suggestions-section {
+            background-color: #afeeee;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section Styles */
+        #contact-section {
+            display: none; /* Initially hide the contact section */
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Cart Section Styles */
+        #cart-section {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            display:none;
+        }
+
+        #cart-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #cart-items-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #cart-items-list li {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #cart-items-list li:last-child {
+            border-bottom: none;
+        }
+
+        #cart-items-list li .cancel-button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #cart-items-list li .cancel-button:hover {
+            background-color: #ff3e21;
+        }
+
+        /* Payment Section Styles */
+        #payment-section {
+            text-align: center;
+            padding: 20px;
+        }
+
+        #payment-section button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #payment-section button:hover {
+            background-color: #ff3e21;
+        }
+
+        /* Footer Styles */
+        footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: left;
+    margin-top: auto;
+    /* width: 10%; Remove this line */
+    flex: 1; /* Add this line to make it take up remaining space */
+}
+
+        footer button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        footer button:hover {
+            background-color: #ff3e21;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    </div>    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showHome()">Home</a></li><br><br><br>
+                <li><a href="#" onclick="showMenu()">Menu</a></li><br><br><br>
+                <li><a href="#" onclick="showContact()">Contact</a></li><br><br><br>
+                <li><a href="#" onclick="showCart()">Cart</a></li><br><br><br>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+        <section id="offers-section">
+            <h2>Speci<div class="content">
+        <header>
+            <h1>Food Order Website</h1>
+        </header>
+
+        <section id="home-section">
+            <!-- Content for Home section goes here -->
+        </section>al Offers</h2>
+        <div class="special-offers">
+            <div class="offer">
+                <h3>50% Off on Burgers</h3>
+                <p>Enjoy a mouthwatering burger at half the price!</p>
+            </div>
+            <div class="offer">
+                <h3>Combo Deal: Pizza + Drink</h3>
+                <p>Get a delicious pizza with your favorite drink at a discounted price!</p>
+            </div>
+            <div class="offer">
+                <h3>Free Dessert with Every Main Course</h3>
+                <p>Indulge in our main courses and get a complimentary dessert!</p>
+            </div>
+        </div>
+            <!-- Content for Special Offers section goes here -->
+        </section>
+
+        <section id="ads-section">
+            <h2>Interesting Ads</h2>
+            <div class="interesting-ads">
+                <div class="ad">
+                    <img src="https://www.bdtask.com/blog/assets/plugins/ckfinder/core/connector/php/uploads/images/categorize-your-food-combo.jpg" alt="Ad 1" width="150px">
+                    <p>Try our new special combo meal!</p>
+                </div>
+                <div class="ad">
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.U3jIniiMABZzsbxOsYN6xAHaFN&pid=Api&P=0&h=180" alt="Ad 2" width="150px">
+                    <p>Introducing our mouthwatering desserts!</p>
+                </div>
+                <div class="ad">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.De3ZIHNuKgeW9-A91oVhAAHaE8&pid=Api&P=0&h=180" alt="Ad 3" width="150px">
+                    <p>Experience the taste of authentic Italian cuisine!</p>
+                </div>
+            </div>
+            <!-- Content for Interesting Ads section goes here -->
+        </section>
+
+        <section id="suggestions-section">
+            <h2>Food Suggestions</h2>
+            <!-- Content for Food Suggestions section goes here -->
+            <div class="food-suggestions">
+                <div class="suggestion">
+                    <img src="https://www.kenricks.com/wp-content/uploads/2020/11/hot-n-spicy-chicken-wings.jpg" alt="Suggestion 1" width="150px">
+                    <h3>Spicy Chicken Wings</h3>
+                    <p>Delight your taste buds with our hot and spicy chicken wings!</p>
+                </div>
+                <div class="suggestion">
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.jpvZ2yWWjhpzi4-_5raQSAHaE8&pid=Api&P=0&h=180" alt="Suggestion 2" width="150px">
+                    <h3>Garlic Shrimp Pasta</h3>
+                    <p>Indulge in our delicious garlic shrimp pasta for a delightful meal!</p>
+                </div>
+                <div class="suggestion">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.-2P0ncfi4i35dpkiNgyumAHaLI&pid=Api&P=0&h=180" alt="Suggestion 3" width="150px">
+                    <h3>Chocolate Lava Cake</h3>
+                    <p>Satisfy your sweet cravings with our decadent chocolate lava cake!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu-section" class="menu">
+            <!-- Content for Menu section goes here -->
+            <article class="menu-item">
+                <img src="https://tse4.mm.bing.net/th?id=OIP.H07SGPpx-swRy0WfmnDIdwHaHa&pid=Api&P=0&h=180" alt="Delicious Beef Burger">
+                <h2>Burger</h2>
+                <p>Delicious beef burger with cheese, lettuce, and tomatoes.</p>
+                <p class="price">$10.99</p>
+                <button onclick="addToCartClicked('Burger', 10.99)">Add to Cart</button>
+            </article>
+    
+            <article class="menu-item">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.2ZhDKxFY2acBHFv5RHXPsgHaEo&pid=Api&P=0&h=180" alt="Classic Pizza">
+                <h2>Pizza</h2>
+                <p>Classic pizza with tomato sauce, mozzarella cheese, and pepperoni.</p>
+                <p class="price">$12.99</p>
+                <button onclick="addToCartClicked('Pizza', 12.99)">Add to Cart</button>
+            </article>
+            <article class="menu-item">
+                <img src="https://tse4.mm.bing.net/th?id=OIP.yUGEbRXUBTd18G78xH3bigHaE8&pid=Api&P=0&h=180" alt="Gobi Manchurian">
+                <h2>Gobi Manchurian</h2>
+                <p>Crispy cauliflower florets tossed in spicy Indo-Chinese sauce.</p>
+                <p class="price">$9.99</p>
+                <button onclick="addToCartClicked('Gobi Manchurian', 9.99)">Add to Cart</button>
+            </article>
+    
+            <article class="menu-item">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.LDq-CC6ZcbUgd-BizGb_6gHaE8&pid=Api&P=0&h=180" alt="Cheese Corn Pizza">
+                <h2>Cheese Corn Pizza</h2>
+                <p>Delicious pizza loaded with cheese and sweet corn.</p>
+                <p class="price">$11.99</p>
+                <button onclick="addToCartClicked('Cheese Corn Pizza', 11.99)">Add to Cart</button>
+            </article>
+    
+            <article class="menu-item">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.lBugv3jB4SaxrqttNxs78gHaE8&pid=Api&P=0&h=180" alt="Frankie">
+                <h2>Frankie</h2>
+                <p>Indian-style wrap filled with veggies and sauces.</p>
+                <p class="price">$6.99</p>
+                <button onclick="addToCartClicked('Frankie', 6.99)">Add to Cart</button>
+            </article>
+    
+            <article class="menu-item">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.bV--b2pzlFMNaOpVPxH9UQHaFc&pid=Api&P=0&h=180" alt="Fries with Coke">
+                <h2>Fries with Coke</h2>
+                <p>Crispy fries served with a refreshing Coke.</p>
+                <p class="price">$5.99</p>
+                <button onclick="addToCartClicked('Fries with Coke', 5.99)">Add to Cart</button>
+            </article>
+        </section>
+
+        <section id="contact-section">
+            <!-- Content for Contact section goes here -->
+            <h2>Contact Details</h2>
+        <p>Email: avantikadesai79@.com</p>
+        <p>Phone: 7387310759</p>
+        </section>
+
+        <section id="cart-section">
+            <!-- Content for Cart section goes here -->
+            <h2>Your Cart</h2>
+            <ul id="cart-items-list"></ul>
+            <!-- Payment method buttons -->
+            <div id="payment-methods">
+                <button onclick="payWithUPI()">Pay with UPI</button>
+                <button onclick="payWithCard()">Pay with Credit/Debit Card</button>
+            </div>
+        </section>
+        
+        <section id="payment-section">
+            <!-- Content for Payment section goes here -->
+            <h2 text-align="center">Payment Methods</h2>
+            <button onclick="payWithUPI()">Pay with UPI</button>
+            <button onclick="payWithCard()">Pay with Credit/Debit Card</button>
+        </section>
+    </div>
+</div>
+        <footer text-align="center">
+            <p>&copy; 2024 Food Order Website</p>
+            <button onclick="showLocation()">Show Current Location</button>
+        </footer>
+    
+
+
+        <script>
+            // JavaScript code goes here
+            var cartItems = [];
+            window.onload = function() {
+    // Hide the payment methods section initially
+    var paymentSection = document.getElementById('payment-section');
+    paymentSection.style.display = 'none';
+};
+            function showHome() {
+                hideAllSections();
+                document.getElementById('home-section').style.display = 'block';
+                document.getElementById('offers-section').style.display = 'block';
+                document.getElementById('ads-section').style.display = 'block';
+                document.getElementById('suggestions-section').style.display = 'block';
+            }
+        
+            function showMenu() {
+                hideAllSections();
+                document.getElementById('menu-section').style.display = 'grid';
+            }
+        
+            function showContact() {
+                hideAllSections();
+                document.getElementById('contact-section').style.display = 'block';
+            }
+        
+            function showCart() {
+    hideAllSections();
+    var cartSection = document.getElementById('cart-section');
+    var cartList = document.getElementById('cart-items-list');
+    var totalAmount = 0; // Variable to store total amount
+
+    if (cartItems.length === 0) {
+        cartList.innerHTML = "<p>Your cart is empty!</p>";
+        cartSection.style.display = 'block';
+        alert("Your cart is empty!");
+    } else {
+        // Display cart items
+        cartList.innerHTML = ""; // Clear previous content
+        cartItems.forEach(function (item, index) {
+            var li = document.createElement("li");
+            li.textContent = item.name + " - $" + item.price;
+            var cancelButton = document.createElement("button");
+            cancelButton.textContent = "Cancel";
+            cancelButton.classList.add("cancel-button");
+            cancelButton.onclick = function() { removeFromCart(index); showCart(); }; // Update cart display after removal
+            li.appendChild(cancelButton);
+            cartList.appendChild(li);
+            // Add item price to totalAmount
+            totalAmount += parseFloat(item.price);
+        });
+        cartSection.style.display = 'block';
+        // Display payment method buttons
+        document.getElementById('payment-methods').style.display = 'block';
+    }
+
+    // Display total amount
+    var totalElement = document.createElement("p");
+    totalElement.textContent = "Total Amount: $" + totalAmount.toFixed(2); // Format total amount to 2 decimal places
+    cartList.appendChild(totalElement);
+}
+
+        
+            function addToCartClicked(itemName, itemPrice) {
+    cartItems.push({ name: itemName, price: itemPrice });
+    alert("Added " + itemName + " to cart!");
+    // Optionally, you can update the cart display here if needed
+}
+
+        
+            function removeFromCart(index) {
+                cartItems.splice(index, 1);
+                showCart();
+            }
+        
+            function updateCart() {
+                var cartList = document.getElementById('cart-items-list');
+                cartList.innerHTML = "";
+                cartItems.forEach(function (item, index) {
+                    var li = document.createElement("li");
+                    li.textContent = item.name + " - $" + item.price;
+                    var cancelButton = document.createElement("button");
+                    cancelButton.textContent = "Cancel";
+                    cancelButton.classList.add("cancel-button");
+                    cancelButton.onclick = function() { removeFromCart(index); };
+                    li.appendChild(cancelButton);
+                    cartList.appendChild(li);
+                });
+            }
+        
+            function showPayment() {
+                hideAllSections();
+                document.getElementById('payment-section').style.display = 'block';
+            }
+        
+            function showLocation() {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    alert("Your current location: " + position.coords.latitude + ", " + position.coords.longitude);
+                });
+            }
+        
+            function payWithUPI() {
+                alert("Redirecting to UPI payment gateway...");
+                // Call UPI payment gateway API here
+                // Redirect to the UPI payment gateway's URL
+            }
+        
+            function payWithCard() {
+                alert("Redirecting to Card payment gateway...");
+                // Call credit/debit card payment gateway API here
+                // Redirect to the card payment gateway's URL
+            }
+        
+            function hideAllSections() {
+                var sections = document.querySelectorAll('section');
+                sections.forEach(function (section) {
+                    section.style.display = 'none';
+                });
+            }
+        </script>
+        
+</body>
+</html>

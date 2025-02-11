@@ -1,0 +1,153 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: rgb(250, 221, 166);
+    color:black;
+    padding: 10px;
+}
+
+nav a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color:orange;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 40;
+    width: 100%;
+}
+
+footer p {
+    margin: 5px;
+}
+
+/* Heading section style */
+.headingdiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid rgb(255, 253, 253);
+    background-color:rgb(255, 205, 112);
+    font-family:'Times New Roman', Times, serif;
+    padding: 20px 0;
+}
+
+/* Main content layout */
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+/* Special offers section style */
+#offers-section {
+    background-color: #e0ffe0;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.special-offers h3 {
+    color: #d9534f;
+}
+
+.special-offers p {
+    color: #5bc0de;
+}
+
+/* Menu section styling */
+#Menu article {
+    display: inline-block;
+    width: 30%;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+#Menu article img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#Menu article h3 {
+    color: #333;
+}
+
+#Menu article p {
+    color: #888;
+}
+
+/* Contact section styles */
+#contact article {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+#contact h2 {
+    margin-bottom: 10px;
+    color: #d9534f;
+}
+
+#contact h4, #contact h5 {
+    color: #555;
+}
+
+/* Aside section style */
+aside {
+    background-color: #fff3e6;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+aside h3 {
+    color: #ff6600;
+}
+
+aside p {
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    #Menu article {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .headingdiv h1 {
+        font-size: 24px;
+    }
+
+    nav a {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+}
